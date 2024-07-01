@@ -16,8 +16,8 @@ public class RestaurantController {
 
 
     @PostMapping("/registerRestaurant")
-    public String register(@RequestBody Restaurant restaurant) {
-        Restaurant registeredUser = restaurantService.registerRestaurant(restaurant);
+    public String register(@RequestBody Restaurant restaurant) {//Manager
+        Restaurant registeredRestaurant = restaurantService.registerRestaurant(restaurant);
         return "Restaurant registered successfully";
     }
 

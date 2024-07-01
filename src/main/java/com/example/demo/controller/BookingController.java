@@ -2,14 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BookingRequest;
 import com.example.demo.entity.Booking;
-import com.example.demo.entity.Restaurant;
 import com.example.demo.service.BookingService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,12 +21,34 @@ public class BookingController {
         return "Booking created successfully with booking id - "+ bookingId;
     }
 
-    @GetMapping("/getBookings")
+    @PostMapping("/bookRestaurant/reserve/{bookingId}")
+    public String bookRestaurant(@PathVariable Long bookingId) {//Only manager
+        Long reserveId=bookingService.reserveRestaurant(bookingId);
+        if(reserveId!=null) {
+            return "Reservation done successfully with reserve id id - " + reserveId;
+        }else{
+            return "Failed to create reservation";
+        }
+    }
+
+    @GetMapping("/cancelBooking/{bookingId}")
+    public String cancelBooking(@PathVariable Long bookingId) {
+        try{
+            bookingService.cancelBooking(bookingId);
+            return "Booking created successfully with booking id - "+ bookingId;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return "Booking created successfully with booking id - "+ bookingId;
+        }
+    }
+
+    @GetMapping("/getAllBookings")
     public String getBooking() {
+        List<Booking> bookingList=bookingService.fetchBookingList();
         Gson gson = new Gson();
 
 
-        //return gson.toJson(restaurantList);
-        return "";
+        return gson.toJson(bookingList);
     }
 }

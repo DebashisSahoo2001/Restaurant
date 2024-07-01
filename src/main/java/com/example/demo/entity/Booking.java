@@ -30,8 +30,8 @@ public class Booking {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy = "booking")
-    private ReservationRequest reservationRequest;
+    /*@OneToOne(mappedBy = "booking")
+    private ReservationRequest reservationRequest;*/
 }
 
 
